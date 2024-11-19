@@ -1,5 +1,5 @@
 services:
-    sio_test:
+    php83-fpm:
         user: app
         build:
             context: .
@@ -11,3 +11,14 @@ services:
             - .:/app:rw
         environment:
             - APP_ENV=dev
+    psql16:
+        image: postgres:16.0-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: test_task # SHOULD BE REPLACED TO ENVIRONMENT VARS
+            POSTGRES_PASSWORD: password # SHOULD BE REPLACED TO ENVIRONMENT VARS
+            POSTGRES_USER: user # SHOULD BE REPLACED TO ENVIRONMENT VARS
+        ports:
+            - "15432:5432"
+        volumes:
+            - ./dev/psql/database_data:/var/lib/postgresql/data:rw
