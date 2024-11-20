@@ -24,10 +24,9 @@ final class ProductPriceCalculator
     ];
 
     public function __construct(
-        private ProductRepositoryInterface $productRepository,
-        private CouponRepositoryInterface $couponRepository,
-    )
-    {
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly CouponRepositoryInterface $couponRepository,
+    ) {
     }
 
     /**

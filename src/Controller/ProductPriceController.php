@@ -21,8 +21,7 @@ final class ProductPriceController extends AbstractController
 {
     public function __construct(
         private readonly ProductPriceCalculator $productPriceCalculator,
-    )
-    {
+    ) {
     }
 
     #[Route('/api/calculate-price', methods: ['POST'])]

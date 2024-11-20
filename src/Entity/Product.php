@@ -18,6 +18,10 @@ class Product
     #[ORM\Column(type: "string", length: 255)]
     private string $name;
 
+    /**
+     * TODO The best solution in my opinion is to store the price in the minimum unit.
+     * But to keep it simple I store it in euros
+     */
     #[ORM\Column(type: "integer")]
     private int $price;
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Dto\Response;
 
-final class ProductPriceCalculateResponseDto
+final class ProductPurchaseResponseDto
 {
     public function __construct(
-        public float $calculatedPrice,
+        public string $purchaseMessage
     ) {
     }
 }

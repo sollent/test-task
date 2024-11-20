@@ -10,7 +10,7 @@ PHONY: help
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-init: down build install up db-create db-dump success-message console ## Initialize environment
+init: down build install up db-create db-dump fixtures-load success-message console ## Initialize environment
 
 build: ## Build services.
 	${DC} build $(c)
@@ -36,11 +36,14 @@ install: ## Install dependencies without running the whole application.
 	${DC_RUN} composer install
 
 db-create: ## Create database if not exist.
-	${DC_RUN}  bin/console doctrine:database:create --if-not-exists
+	${DC_RUN} bin/console doctrine:database:create --if-not-exists
 
 db-dump:
-	${DC_RUN}  bin/console d:s:u --force
+	${DC_RUN} bin/console d:s:u --force
+
+fixtures-load:	## Load fixtures for Products and Coupons entities.
+	${DC_RUN} bin/console doctrine:fixtures:load --append
 
 success-message:
-	@echo "You can now access the application at http://localhost:8337"
+	@echo "You can now access the API at http://localhost:8337/api/doc"
 	@echo "Good luck! 🚀"

@@ -9,7 +9,6 @@ final readonly class BadRequestResponseDto
     public function __construct(
         public string $message,
         public int $code
-    )
-    {
+    ) {
     }
 }
