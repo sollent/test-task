@@ -1,4 +1,4 @@
-### Calculate Price
+### Calculate Price success calculation with percent coupon
 POST http://127.0.0.1:8337/api/calculate-price
 Accept: application/json
 Content-Type: application/json
@@ -8,8 +8,50 @@ Content-Type: application/json
   "taxNumber": "DE123456789",
   "couponCode": "P10"
 }
+### Calculate Price success calculation with fixed coupon
+POST http://127.0.0.1:8337/api/calculate-price
+Accept: application/json
+Content-Type: application/json
 
-### Execute Purchase
+{
+  "product": 2,
+  "taxNumber": "IT12345678900",
+  "couponCode": "F8"
+}
+### Calculate Price validation for "product"
+POST http://127.0.0.1:8337/api/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 111,
+  "taxNumber": "DE123456789",
+  "couponCode": "P10"
+}
+### Calculate Price validation for "taxNumber"
+POST http://127.0.0.1:8337/api/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 111,
+  "taxNumber": "DE123456789111",
+  "couponCode": "P10"
+}
+### Calculate Price validation for "couponCode"
+POST http://127.0.0.1:8337/api/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "IT12345678900",
+  "couponCode": "P100"
+}
+
+
+
+### Execute Purchase success
 POST http://127.0.0.1:8337/api/purchase
 Accept: application/json
 Content-Type: application/json
@@ -19,4 +61,15 @@ Content-Type: application/json
   "taxNumber": "DE123456789",
   "couponCode": "P10",
   "paymentProcessorType": "paypal"
+}
+### Execute Purchase failed (with total calculated price < 100)
+POST http://127.0.0.1:8337/api/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "P10",
+  "paymentProcessorType": "stripe"
 }
