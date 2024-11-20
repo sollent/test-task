@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Enum\CouponType;
+use App\Repository\CouponRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: CouponRepository::class)]
 class Coupon
 {
     #[ORM\Id]
@@ -15,22 +16,26 @@ class Coupon
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\Column(type: '', unique: true, enumType: CouponType::class)]
+    #[ORM\Column(type: 'string', enumType: CouponType::class)]
     private CouponType $type;
 
     #[ORM\Column(type: "integer")]
     private int $value;
 
+    #[ORM\Column(type: "string", unique: true)]
+    private string $code;
+
+    public function __construct(CouponType $type, int $value)
+    {
+        $this->type = $type;
+        $this->value = $value;
+
+        $this->code = sprintf('%s%s', $type->value, $value);
+    }
+
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): Coupon
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getType(): CouponType
@@ -38,22 +43,13 @@ class Coupon
         return $this->type;
     }
 
-    public function setType(CouponType $type): Coupon
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getValue(): int
     {
         return $this->value;
     }
 
-    public function setValue(int $value): Coupon
+    public function getCode(): string
     {
-        $this->value = $value;
-
-        return $this;
+        return $this->code;
     }
 }

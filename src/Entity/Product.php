@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
     #[ORM\Id]
@@ -20,16 +21,15 @@ class Product
     #[ORM\Column(type: "integer")]
     private int $price;
 
+    public function __construct(string $name, int $price)
+    {
+        $this->name = $name;
+        $this->price = $price;
+    }
+
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): Product
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getName(): string
@@ -37,22 +37,8 @@ class Product
         return $this->name;
     }
 
-    public function setName(string $name): Product
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getPrice(): int
     {
         return $this->price;
-    }
-
-    public function setPrice(int $price): Product
-    {
-        $this->price = $price;
-
-        return $this;
     }
 }
